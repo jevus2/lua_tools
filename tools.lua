@@ -84,7 +84,7 @@ local function parametric_interpolation(p1, p2, s)
     -- p2 - end point
     -- s - parameter [0,1]
     -- check if p1 and p2 have the same dimension
-    if #p1 ~= #p2 then assert(error('tools.parameterised_interpolation: points don\'t have the same dimension')) end
+    if #p1 ~= #p2 then assert(error('tools.parametric_interpolation: points don\'t have the same dimension')) end
     local res = {}
     for i, v in pairs(p1) do
         res[i] = v + s * (p2[i] - v)
