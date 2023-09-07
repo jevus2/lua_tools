@@ -74,9 +74,7 @@ end
 
 local function lin_interp(x_0,x_1,y_0,y_1,x)
     -- Linear interpolation
-    local y = y_0 + (y_1 - y_0) / (x_1 - x_0) * (x - x_0)
-
-    return y
+    return y_0 + (y_1 - y_0) / (x_1 - x_0) * (x - x_0)
 end
 
 local function parametric_interpolation(p1, p2, s)
@@ -236,6 +234,16 @@ local function ellipse_circumference(a, b)
     return math.pi*(a + b) * num / den
 end
 
+local function calculate_centroid(points)
+    local sum = {}
+    for i, point in ipairs(points) do
+        for key, value in pairs(point) do
+            sum[key] = sum[key] + 1/#points * value
+        end
+    end
+    return sum
+end
+
 return {mean = mean, 
     sum = sum, 
     round = round, 
@@ -258,5 +266,6 @@ return {mean = mean,
     three_point_plane = three_point_plane,
     rms = rms,
     sort_by_x = sort_by_x,
-    ellipse_circumference = ellipse_circumference
+    ellipse_circumference = ellipse_circumference,
+    calculate_centroid = calculate_centroid
     }
