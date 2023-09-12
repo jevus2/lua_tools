@@ -99,4 +99,10 @@ function table.sort_by_x(t1,t2)
     return a < b
 end
 
+function table.print(t)
+    for i, v in pairs(t) do
+        print(i, v)
+    end
+end
+
 return table

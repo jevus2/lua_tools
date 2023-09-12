@@ -235,13 +235,26 @@ local function ellipse_circumference(a, b)
 end
 
 local function calculate_centroid(points)
-    local sum = {}
-    for i, point in ipairs(points) do
-        for key, value in pairs(point) do
-            sum[key] = sum[key] + 1/#points * value
+    local centroid = {}
+    for key, value in pairs(points[1]) do
+        centroid[key] = 1/#points * value
+    end
+    for i=2, #points do
+        for key, value in pairs(points[i]) do
+            centroid[key] = centroid[key] + 1/#points * value
         end
     end
-    return sum
+    return centroid
+end
+
+local function compare_points(p1, p2)
+    for key, value in pairs(p1) do
+        key_exists, message = pcall(function () return assert(p2[key]) end)
+        if not key_exists then return false, string.format('point 1 doesn\'t contain coordinate %s', key) end
+        if value ~= p2[key] then return false, string.format('coordinate %s doesn\'t match', key) end
+    end
+
+    return true
 end
 
 return {mean = mean, 
@@ -267,5 +280,6 @@ return {mean = mean,
     rms = rms,
     sort_by_x = sort_by_x,
     ellipse_circumference = ellipse_circumference,
-    calculate_centroid = calculate_centroid
+    calculate_centroid = calculate_centroid,
+    compare_points = compare_points
     }
