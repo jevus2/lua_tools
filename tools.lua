@@ -250,8 +250,13 @@ end
 local function compare_points(p1, p2)
     for key, value in pairs(p1) do
         key_exists, message = pcall(function () return assert(p2[key]) end)
-        if not key_exists then return false, string.format('point 1 doesn\'t contain coordinate %s', key) end
+        if not key_exists then return false, string.format('point 2 doesn\'t contain coordinate %s but point 1 does', key) end
         if value ~= p2[key] then return false, string.format('coordinate %s doesn\'t match', key) end
+    end
+
+    for key, value in pairs(p2) do
+        key_exists, message = pcall(function () return assert(p1[key]) end)
+        if not key_exists then return false, string.format('point 1 doesn\'t contain coordinate %s but point 2 does', key) end
     end
 
     return true
