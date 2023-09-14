@@ -99,9 +99,11 @@ function table.sort_by_x(t1,t2)
     return a < b
 end
 
-function table.print(t)
+function table.print(t, option)
+    local prefix = ''
+    if option == 'indent' then prefix = '\t' end
     for i, v in pairs(t) do
-        print(i, v)
+        print(prefix .. i, v)
     end
 end
 
