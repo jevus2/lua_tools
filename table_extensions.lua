@@ -107,4 +107,11 @@ function table.print(t, option)
     end
 end
 
+function table.deepcopy(obj)
+    if type(obj) ~= 'table' then return obj end
+    local res = setmetatable({}, getmetatable(obj))
+    for k, v in pairs(obj) do res[table.deepcopy(k)] = table.deepcopy(v) end
+    return res
+end
+
 return table
