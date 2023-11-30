@@ -10,7 +10,7 @@ local function write_points_to_file(filename, points, mode)
     mode = mode or 'w'
     outfile = assert(io.open(filename, mode))
     if mode == 'w' then
-        outfile:write(string.format('# %s - written by file_operations.write_points_to_file\n', filename))
+        outfile:write(string.format('# %s - written by file_operations.write_points_to_file %s\n', filename, os.date('%d/%m/%y')))
         header = string.format('# ')
     end
     i = 1
