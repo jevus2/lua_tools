@@ -81,14 +81,15 @@ local function parametric_interpolation(p1, p2, s)
     -- p1 - start point
     -- p2 - end point
     -- s - parameter [0,1]
-    -- check if p1 and p2 have the same dimension
-    if #p1 ~= #p2 then assert(error('tools.parametric_interpolation: points don\'t have the same dimension')) end
     local res = {}
     for i, v in pairs(p1) do
-        res[i] = v + s * (p2[i] - v)
+        if not p2[i] then 
+            msg = 'the points don\'t have the same dimension'
+        else
+            res[i] = v + s * (p2[i] - v)
+        end
     end
-
-    return res
+    return res, msg
 end
 
 local function mov_avg(tab,width)
