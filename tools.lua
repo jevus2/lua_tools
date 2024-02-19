@@ -264,6 +264,15 @@ local function compare_points(p1, p2, accuracy)
     return true
 end
 
+local function vec_magnitude(vec)
+    local mag = 0
+    for key, value in pairs(vec) do
+        print(key, value)
+        mag = value^2 + mag
+    end
+    return mag^0.5
+end
+
 return {mean = mean, 
     sum = sum, 
     round = round, 
@@ -288,5 +297,6 @@ return {mean = mean,
     sort_by_x = sort_by_x,
     ellipse_circumference = ellipse_circumference,
     calculate_centroid = calculate_centroid,
-    compare_points = compare_points
+    compare_points = compare_points,
+    vec_magnitude = vec_magnitude
     }

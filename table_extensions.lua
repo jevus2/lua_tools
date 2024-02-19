@@ -84,10 +84,28 @@ function table.has_value(tab, val)
 end
 
 function table.concatenate(t1,t2)
-    for i=1,#t2 do
-        t1[#t1+1] = t2[i]
+    -- concatenates two numerically indexed tables
+    res = {}
+    for i=1,#t1 do
+        res[#res+1] = t1[i]
     end
-    return t1
+    for i=1,#t2 do
+        res[#res+1] = t2[i]
+    end
+    return res
+end
+
+function table.merge(t1, t2)
+    -- merges two tables
+    -- duplicate keys will be replaced by t2[key]
+    res = {}
+    for key, value in pairs(t1) do
+        res[key] = value
+    end
+    for key, value in pairs(t2) do
+        res[key] = value
+    end
+    return res
 end
 
 function table.sort_by_x(t1,t2)
