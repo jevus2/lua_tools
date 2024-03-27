@@ -95,15 +95,15 @@ function table.concatenate(t1,t2)
     return res
 end
 
-function table.merge(t1, t2)
+function table.merge(...)
     -- merges two tables
-    -- duplicate keys will be replaced by t2[key]
+    -- duplicate keys will be replaced by the last
+    -- table's value
     res = {}
-    for key, value in pairs(t1) do
-        res[key] = value
-    end
-    for key, value in pairs(t2) do
-        res[key] = value
+    for i, t in ipairs(arg) do
+        for key, value in pairs(t) do
+            res[key] = value
+        end
     end
     return res
 end

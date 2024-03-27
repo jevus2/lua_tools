@@ -4,8 +4,6 @@
 -- J.Kunze
 -- 23-09-01
 
-local file_operations = {}
-
 local function write_points_to_file(filename, points, mode)
     mode = mode or 'w'
     outfile = assert(io.open(filename, mode))

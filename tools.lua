@@ -1,7 +1,5 @@
 -- A collection of functions for frequently used operations
 
-local tools = {}
-
 function mean(table)
     -- Return arithmetic mean of a table
     table_sum = sum(table)
