@@ -4,32 +4,36 @@
 -- J.Kunze
 -- 23-09-01
 
-local function write_points_to_file(filename, points, mode)
+local function write_points_to_file(filename, points, mode, keys)
     mode = mode or 'w'
+    keys = keys or nil
     outfile = assert(io.open(filename, mode))
     if mode == 'w' then
         outfile:write(string.format('# %s - written by file_operations.write_points_to_file %s\n', filename, os.date("%c")))
-        header = string.format('# ')
+        header = string.format('#')
     end
     i = 1
-    coordinates = ''
-    keys = {}
-    for key, value in pairs(points[1]) do
-        header = header .. string.format('%d:%s ', i, key)
-        coordinates = coordinates .. string.format('%e ', value)
-        keys[#keys+1] = key
-        i = i + 1
+    if not keys then
+        -- find keys
+        keys = {}
+        for key, value in pairs(points[1]) do
+            header = header .. string.format(' %d:%s', i, key)
+            keys[#keys+1] = key
+            i = i + 1
+        end
+    else
+        for i=1, #keys do
+            header = header .. string.format(' %d:%s', i, keys[i])
+        end
     end
     if mode == 'w' then
         outfile:write(header .. '\n')
     end
-    outfile:write(coordinates  .. '\n')
-    for i=2, #points do
-        coordinates = ''
-        for j, key in ipairs(keys) do
-            coordinates = coordinates .. string.format('%e ', points[i][key])
+    for i=1, #points do
+        for _, key in ipairs(keys) do
+            outfile:write(string.format('%e ', points[i][key]))
         end
-        outfile:write(coordinates  .. '\n')
+        outfile:write('\n')
     end
 
     outfile:close()

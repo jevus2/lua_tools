@@ -99,12 +99,14 @@ function table.merge(...)
     -- merges two tables
     -- duplicate keys will be replaced by the last
     -- table's value
-    res = {}
-    for i, t in ipairs(arg) do
+    local args = {...}
+    local res = {}
+    for i, t in ipairs(args) do
         for key, value in pairs(t) do
             res[key] = value
         end
     end
+
     return res
 end
 
