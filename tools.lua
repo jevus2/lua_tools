@@ -129,7 +129,7 @@ end
 
 local function factorial(number)
     -- factorial of a given number
-    local factorial = 0
+    local factorial = 1
     while number > 1 do
         factorial = factorial * number
         number = number - 1
