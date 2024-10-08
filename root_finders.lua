@@ -88,12 +88,10 @@ function root_finders.brent(f, a, b, args, tol, max_iterations)
         error('limits a and b in brent root finder don\'t bracket the root')
     elseif math.abs(fa) <= tol then
         -- a is a root
-        print('a is the root', a)
-        return a, nil
+        return a, 'a is the root'
     elseif math.abs(fb) <= tol then
         -- b is a root
-        print('b is the root', b)
-        return b, nil
+        return b, 'b is the root'
     end
 
     if math.abs(fa) < math.abs(fb) then
