@@ -270,9 +270,9 @@ local function vec_magnitude(vec)
     return mag^0.5
 end
 
-local function add_noise(noise_magnitude)
+local function add_noise(noise_level)
     math.randomseed(os.time())
-    return 1 + noise_magnitude * (math.random() - 0.5)
+    return 1 + noise_level * (math.random() - 0.5)
 end
 
 return {mean = mean, 
