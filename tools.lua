@@ -270,6 +270,11 @@ local function vec_magnitude(vec)
     return mag^0.5
 end
 
+local function add_noise(noise_level)
+    math.randomseed(os.time())
+    return 1 + noise_level * (math.random() - 0.5)
+end
+
 return {mean = mean, 
     sum = sum, 
     round = round, 
@@ -295,5 +300,6 @@ return {mean = mean,
     ellipse_circumference = ellipse_circumference,
     calculate_centroid = calculate_centroid,
     compare_points = compare_points,
-    vec_magnitude = vec_magnitude
+    vec_magnitude = vec_magnitude,
+    add_noise = add_noise
     }
