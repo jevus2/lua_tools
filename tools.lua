@@ -272,7 +272,7 @@ end
 
 local function add_noise(noise_level)
     math.randomseed(os.time())
-    return 1 + noise_level * (math.random() - 0.5)
+    return 1 + 2 * noise_level * (math.random() - 0.5)
 end
 
 return {mean = mean, 
