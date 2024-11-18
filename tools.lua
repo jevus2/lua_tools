@@ -247,11 +247,15 @@ local function calculate_centroid(points)
 end
 
 local function compare_points(p1, p2, accuracy)
-    accuracy = accuracy or 1e-4
+    accuracy = accuracy or 1e-12
+    print('p1')
+    table.print(p1, 'indent')
+    print('p2')
+    table.print(p2, 'indent')
     for key, value in pairs(p1) do
         key_exists, message = pcall(function () return assert(p2[key]) end)
         if not key_exists then return false, string.format('point 2 doesn\'t contain coordinate %s but point 1 does', key) end
-        if math.abs((value - p2[key]) / value) > accuracy then return false, string.format('coordinate %s doesn\'t match', key) end
+        if math.abs(value - p2[key]) > accuracy then return false, string.format('coordinate %s doesn\'t match', key) end
     end
 
     for key, value in pairs(p2) do
