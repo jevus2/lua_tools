@@ -248,10 +248,6 @@ end
 
 local function compare_points(p1, p2, accuracy)
     accuracy = accuracy or 1e-12
-    print('p1')
-    table.print(p1, 'indent')
-    print('p2')
-    table.print(p2, 'indent')
     for key, value in pairs(p1) do
         key_exists, message = pcall(function () return assert(p2[key]) end)
         if not key_exists then return false, string.format('point 2 doesn\'t contain coordinate %s but point 1 does', key) end
@@ -279,6 +275,19 @@ local function add_noise(noise_level)
     return 1 + 2 * noise_level * (math.random() - 0.5)
 end
 
+local function cubic_polynomial(p0, p1, derivative=false)
+    -- construct a cubic polynomial ax**3 + bx**2 + cx + d or it's derivative 
+    -- in 2D from two points and their derivative 
+    -- p0={x,y,dxdy}, p1={x,y,dxdy}
+    coefficient_a = (p0.dydx + p1.dydx - 2 * (p0.y - p1.y) / (x0 - x1)) / (3 * (p0.x**2 + p1.x**2) - 2 * (p0.x**3 - p1.x**3) / (p0.x - p1.x))
+    coefficient_b = (p0.dydx - p1.dydx) / (2 * (p0.x - p1.x)) - 3 / 2 * coefficient_a * (p0.x + p1.x)
+    coefficient_c = p1.dydx - 3 * coefficient_a * p1.x**2 - 2 * coefficient_b * p1.x
+    coefficient_d = p1.y - coefficient_a * p1.x**3 - coefficient_b * p1.x**2 - coefficient_c * p1.x
+
+    if derivative then return function(x) return 3 * coefficient_a * x**2 + 2 * coefficient_b * x + coefficient_c end end
+    return function(x) return coefficient_a * x**3 + coefficient_b * x**2 + coefficient_c * x + coefficient_d end
+end
+
 return {mean = mean, 
     sum = sum, 
     round = round, 
@@ -295,7 +304,6 @@ return {mean = mean,
     sleep = sleep,
     scal_prod = scal_prod,
     vec_ang = vec_ang,
-    copy_table = copy_table,
     bilin_interp = bilin_interp,
     multilin_interp = multilin_interp,
     three_point_plane = three_point_plane,
@@ -305,5 +313,6 @@ return {mean = mean,
     calculate_centroid = calculate_centroid,
     compare_points = compare_points,
     vec_magnitude = vec_magnitude,
-    add_noise = add_noise
+    add_noise = add_noise,
+    cubic_polynomial = cubic_polynomial
     }
